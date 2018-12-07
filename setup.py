@@ -11,7 +11,7 @@ setup(
     zip_safe=False,
     scripts=['scheduler_failover_controller/bin/scheduler_failover_controller'],
     install_requires=[
-        'airflow>=1.7.0',
+        'apache-airflow==1.9.0',
         'kazoo>=2.2.1',
         'coverage>=4.2',
         'eventlet>=0.9.7',
@@ -19,6 +19,6 @@ setup(
     extras_require={},
     author='Robert Sanders',
     author_email='robert.sanders@clairvoyantsoft.com',
-    url='https://github.com/teamclairvoyant/airflow-scheduler-failover-controller',
-    download_url=('https://github.com/teamclairvoyant/airflow-scheduler-failover-controller/tarball/' + __version__)
+    url='https://github.com/teampayoff/airflow-scheduler-failover-controller',
+    download_url=('https://github.com/teampayoff/airflow-scheduler-failover-controller/tarball/' + __version__)
 )
