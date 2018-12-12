@@ -152,6 +152,7 @@ class FailoverController:
         if is_successful:
             active_list = []
             for line in output:
+                line = str(line)
                 if line.strip() != "" and process_check_command not in line and grep_command not in line and grep_command_no_quotes not in line and full_status_check_command not in line:
                     active_list.append(line)
 
