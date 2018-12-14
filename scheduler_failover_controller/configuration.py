@@ -3,10 +3,12 @@ import configparser
 import socket
 import sys
 import logging
+import airflow.configuration as conf
 
 
 def get_airflow_home_dir():
     return os.environ['AIRFLOW_HOME'] if "AIRFLOW_HOME" in os.environ else os.path.expanduser("~/airflow")
+
 
 DEFAULT_AIRFLOW_HOME_DIR = get_airflow_home_dir()
 DEFAULT_METADATA_SERVICE_TYPE = "SQLMetadataService"
@@ -98,7 +100,7 @@ class Configuration:
 
     def get_config(self, section, option, default=None):
         try:
-            config_value = self.conf.get(section, option)
+            config_value = conf.get(section, option)  # self.conf.get(section, option)
             return config_value if config_value is not None else default
         except:
             pass
