@@ -1,12 +1,14 @@
 import os
-import ConfigParser
+import configparser
 import socket
 import sys
 import logging
+import airflow.configuration as conf
 
 
 def get_airflow_home_dir():
     return os.environ['AIRFLOW_HOME'] if "AIRFLOW_HOME" in os.environ else os.path.expanduser("~/airflow")
+
 
 DEFAULT_AIRFLOW_HOME_DIR = get_airflow_home_dir()
 DEFAULT_METADATA_SERVICE_TYPE = "SQLMetadataService"
@@ -80,10 +82,10 @@ class Configuration:
         self.airflow_config_file_path = airflow_config_file_path
 
         if not os.path.isfile(airflow_config_file_path):
-            print "Cannot find Airflow Configuration file at '" + str(airflow_config_file_path) + "'!!!"
+            print("Cannot find Airflow Configuration file at '" + str(airflow_config_file_path) + "'!!!")
             sys.exit(1)
 
-        self.conf = ConfigParser.RawConfigParser()
+        self.conf = configparser.RawConfigParser()
         self.conf.read(airflow_config_file_path)
 
     @staticmethod
@@ -98,7 +100,7 @@ class Configuration:
 
     def get_config(self, section, option, default=None):
         try:
-            config_value = self.conf.get(section, option)
+            config_value = conf.get(section, option)  # self.conf.get(section, option)
             return config_value if config_value is not None else default
         except:
             pass
@@ -181,9 +183,9 @@ class Configuration:
     def add_default_scheduler_failover_configs_to_airflow_configs(self):
         with open(self.airflow_config_file_path, 'r') as airflow_config_file:
             if "[scheduler_failover]" not in airflow_config_file.read():
-                print "Adding Scheduler Failover configs to Airflow config file..."
+                print("Adding Scheduler Failover configs to Airflow config file...")
                 with open(self.airflow_config_file_path, "a") as airflow_config_file_to_append:
                     airflow_config_file_to_append.write(DEFAULT_SCHEDULER_FAILOVER_CONTROLLER_CONFIGS)
-                    print "Finished adding Scheduler Failover configs to Airflow config file."
+                    print("Finished adding Scheduler Failover configs to Airflow config file.")
             else:
-                print "[scheduler_failover] section already exists. Skipping adding Scheduler Failover configs."
+                print("[scheduler_failover] section already exists. Skipping adding Scheduler Failover configs.")

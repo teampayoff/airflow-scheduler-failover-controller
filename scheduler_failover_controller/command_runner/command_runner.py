@@ -52,7 +52,7 @@ class CommandRunner:
                     self.logger.debug("Run Command stderr output: " + str(stderr_output))
             if process.stdout is not None:
                 output += process.stdout.readlines()
-        except Exception, e:
+        except Exception as e:
             is_successful = False
             output = str(e)
         if process.returncode != 0:
